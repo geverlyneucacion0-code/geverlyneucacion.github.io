@@ -51,19 +51,13 @@
     /* Horizontal scroll gallery */
     .scroll-container {
       margin-top: 15px;
-      background-color: transparent;
       overflow-x: auto;
       white-space: nowrap;
       padding: 5px;
     }
     .scroll-container img {
-      display: inline-block;
-      width: 280px;
-      height: 300px;
       margin-right: 10px;
       border-radius: 8px;
-      display: inline-block;
-      
     }
   </style>
 </head>
@@ -71,17 +65,15 @@
 
   <!-- Background video -->
   <video autoplay muted loop id="urvid">
-    <source src="ACT12_EUCACION/8.mp4" type="video/mp4">
+    <source src="ACT12_EUCACION/10.mp4" type="video/mp4">
     Your browser does not support the video tag.
   </video>
 
   <!-- Overlay content -->
   <div class="content">
-    <h1>Heading</h1>
-    <p>Gallery</p>
-    <button id="pause_button" onclick="myFunction()">Pause</button>
+    <center> <h2> <p>Gallery</p> </h2></center>
     
-    
+    <marquee>
       <img src="ACT12_EUCACION/1.jpg" width="280" height="300">
       <img src="ACT12_EUCACION/2.jpg" width="280" height="300">
       <img src="ACT12_EUCACION/3.jpg" width="280" height="300">
@@ -98,10 +90,17 @@
       <img src="ACT12_EUCACION/18.jpg" width="280" height="300">
       <img src="ACT12_EUCACION/23.jpeg" width="280" height="300">
       <img src="ACT12_EUCACION/22.jpeg" width="280" height="300">
+      
+  
+      </marquee>
+<br>
+<br>
+      <button id="pause_button" onclick="myFunction()">Pause</button>
+
+    <div class="scroll-container">
     </div>
   </div>
-<br>
-  <br>
+
     <script>
     function myFunction() {
   let video = document.getElementById("urvid");
