@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rock, Paper, Scissors</title>
+    <link rel="stylesheet" href="CSS/midterm.css">
+</head>
+
+
+<body>
+    <div class="grid-bg"></div>
+    <div class="scanline"></div>
+    <!-- Navigation -->
+    <nav class="nav-circle">
+        <a href="index.html" class="nav-btn">HOME</a>
+        <a href="gallery.html" class="nav-btn">GALLERY</a>
+        <a href="portfolio.html" class="nav-btn">PORTFOLIO</a>
+        <a href="about.html" class="nav-btn">ABOUT</a>
+        <a href="contact.html" class="nav-btn">CONTACT</a>
+    </nav>
+
+
+
+    <div class="game-container">
+        <h2>Rock, Paper, Scissors!</h2>
+
+        <p>Make your choice:</p>
+
+        <div class="buttons-container">
+            <button id="rock" class="choice-button" onclick="playGame('rock')">✊ ROCK</button>
+            <button id="paper" class="choice-button" onclick="playGame('paper')">✋ PAPER</button>
+            <button id="scissors" class="choice-button" onclick="playGame('scissors')">✌️ SCISSORS</button>
+        </div>
+
+        <div id="results">
+            <p class="result-message tie">Click a button to start playing!</p>
+        </div>
+    </div>
+
+    <script>
+        const choices = ['rock', 'paper', 'scissors'];
+        const resultsDiv = document.getElementById('results');
+
+        function getComputerChoice() {
+            // Generates a random index (0, 1, or 2)
+            const randomIndex = Math.floor(Math.random() * choices.length);
+            return choices[randomIndex];
+        }
+
+        function determineWinner(userChoice, computerChoice) {
+            if (userChoice === computerChoice) {
+                return 'tie';
+            }
+            // Winning conditions: Rock > Scissors, Paper > Rock, Scissors > Paper
+            if (
+                (userChoice === 'rock' && computerChoice === 'scissors') ||
+                (userChoice === 'paper' && computerChoice === 'rock') ||
+                (userChoice === 'scissors' && computerChoice === 'paper')
+            ) {
+                return 'win';
+            }
+            return 'lose';
+        }
+
+        function playGame(userChoice) {
+            const computerChoice = getComputerChoice();
+            const result = determineWinner(userChoice, computerChoice);
+
+            let message = '';
+            let className = result; // win, lose, or tie
+
+            if (result === 'win') {
+                message = '🎉 You Win!';
+            } else if (result === 'lose') {
+                message = '😭 You Lose!';
+            } else {
+                message = '⚖️ It\'s a Tie!';
+            }
+
+            // Update the results display
+            resultsDiv.innerHTML = `
+                <p class="result-message ${className}">${message}</p>
+                <p class="user-and-comp-choices">
+                    You chose: <strong>${userChoice.toUpperCase()}</strong> | 
+                    Computer chose: <strong>${computerChoice.toUpperCase()}</strong>
+                </p>
+            `;
+        }
+    </script>
+    <br><a href="portfolio.html" class="nav-btn">BACK</a>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content ">
+            <div class="footer-section ">
+                <h3>FUTURE</h3>
+                <p>Digital visionary pushing the boundaries of design and technology. Creating immersive experiences that bridge imagination and reality.</p>
+                <div class="social-links ">
+                    <a href="# " class="social-link ">🐦</a>
+                    <a href="# " class="social-link ">💼</a>
+                    <a href="# " class="social-link ">📸</a>
+                    <a href="# " class="social-link ">🎨</a>
+                </div>
+            </div>
+
+            <div class="footer-section ">
+                <h3>QUICK LINKS</h3>
+                <div class="footer-links ">
+                    <a href="index.html ">Home</a>
+                    <a href="gallery.html ">Gallery</a>
+                    <a href="portfolio.html ">Portfolio</a>
+                    <a href="about.html ">About</a>
+                    <a href="contact.html ">Contact</a>
+                </div>
+            </div>
+
+            <div class="footer-section ">
+                <h3>SERVICES</h3>
+                <div class="footer-links ">
+                    <a href="# ">UI/UX Design</a>
+                    <a href="# ">Web Development</a>
+                    <a href="# ">Brand Identity</a>
+                    <a href="# ">Digital Strategy</a>
+                    <a href="# ">Consultation</a>
+                </div>
+            </div>
+
+            <div class="footer-section ">
+                <h3>GET IN TOUCH</h3>
+                <div class="footer-links ">
+                    <a href="mailto:geverlyneucacion0@gmail.com ">geverlyneucacion0@gmail.com</a>
+                    <a href="tel:+639268159941 ">+639268159941</a>
+                    <p style="margin-top: 1rem; color: rgba(255, 255, 255, 0.7); ">Metaverse<br>Digital Realm</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="footer-bottom ">
+            <p>&copy; 2024 Geverlyn Eucacion. All rights reserved.</p>
+            <div class="footer-bottom-links ">
+                <a href="# ">Privacy Policy</a>
+                <a href="# ">Terms of Service</a>
+                <a href="# ">Cookie Policy</a>
+            </div>
+        </div>
+    </footer>
+</body>
+
+
+</html>

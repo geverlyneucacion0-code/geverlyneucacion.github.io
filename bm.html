@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Basic Math</title>
+    <link rel="stylesheet" href="CSS/midterm.css">
+
+    <!-- Navigation -->
+    <div class="scanline"></div>
+    <nav class="nav-circle">
+        <a href="index.html" class="nav-btn">HOME</a>
+        <a href="gallery.html" class="nav-btn">GALLERY</a>
+        <a href="portfolio.html" class="nav-btn">PORTFOLIO</a>
+        <a href="about.html" class="nav-btn">ABOUT</a>
+        <a href="contact.html" class="nav-btn">CONTACT</a>
+    </nav>
+
+    <body>
+
+        <div class="game-container">
+            <h2>Math Clicker Challenge</h2>
+
+
+            <div class="score-board">
+                <span>Score: <strong id="score">0</strong></span>
+                <span>Time: <strong id="timer">30</strong>s</span>
+            </div>
+
+            <div id="problem">Click Start</div>
+
+            <div id="answers-grid">
+                <button class="answer-button" disabled></button>
+                <button class="answer-button" disabled></button>
+                <button class="answer-button" disabled></button>
+                <button class="answer-button" disabled></button>
+            </div>
+
+            <button id="start-button" onclick="startGame()">Start Game</button>
+        </div>
+
+        <script>
+            const problemElement = document.getElementById('problem');
+            const answerButtons = document.querySelectorAll('.answer-button');
+            const scoreElement = document.getElementById('score');
+            const timerElement = document.getElementById('timer');
+            const startButton = document.getElementById('start-button');
+
+            let score = 0;
+            let timeLeft = 30;
+            let correctAnswer = 0;
+            let gameActive = false;
+            let timerInterval;
+
+            // --- Core Game Functions ---
+
+            function generateProblem() {
+                // Generate two random numbers (operands)
+                const num1 = Math.floor(Math.random() * 15) + 1; // 1 to 15
+                const num2 = Math.floor(Math.random() * 15) + 1; // 1 to 15
+
+                correctAnswer = num1 + num2;
+                problemElement.textContent = `${num1} + ${num2} = ?`;
+
+                generateAnswers();
+            }
+
+            function generateAnswers() {
+                const answers = [correctAnswer];
+
+                // Add three incorrect but close answers
+                while (answers.length < 4) {
+                    // Generate a nearby incorrect answer (e.g., +/- 1 to 5 from the correct answer)
+                    let incorrectAnswer = correctAnswer + Math.floor(Math.random() * 10) - 5;
+
+                    // Ensure answer is positive and not already in the list
+                    if (incorrectAnswer > 0 && !answers.includes(incorrectAnswer)) {
+                        answers.push(incorrectAnswer);
+                    }
+                }
+
+                // Shuffle the answers array to randomize button placement
+                answers.sort(() => Math.random() - 0.5);
+
+                // Assign the answers to the buttons
+                answerButtons.forEach((button, index) => {
+                    button.textContent = answers[index];
+                    button.disabled = false;
+                    button.onclick = () => checkAnswer(answers[index]);
+                });
+            }
+
+            function checkAnswer(chosenAnswer) {
+                if (!gameActive) return;
+
+                if (chosenAnswer === correctAnswer) {
+                    score++;
+                    scoreElement.textContent = score;
+                    // Flash green for correct
+                    problemElement.style.color = '#27ae60';
+                    setTimeout(() => {
+                        problemElement.style.color = '#f1c40f';
+                        generateProblem();
+                    }, 100);
+                } else {
+                    // Flash red for incorrect
+                    problemElement.style.color = '#e74c3c';
+                    setTimeout(() => {
+                        problemElement.style.color = '#f1c40f';
+                    }, 100);
+                    // No score penalty, just move on
+                    generateProblem();
+                }
+            }
+
+            function startGame() {
+                if (gameActive) return;
+
+                score = 0;
+                timeLeft = 30;
+                gameActive = true;
+                scoreElement.textContent = score;
+                timerElement.textContent = timeLeft;
+                startButton.disabled = true;
+                startButton.textContent = 'Game Running...';
+
+                generateProblem();
+                startTimer();
+            }
+
+            function startTimer() {
+                timerInterval = setInterval(() => {
+                    timeLeft--;
+                    timerElement.textContent = timeLeft;
+
+                    if (timeLeft <= 0) {
+                        endGame();
+                    }
+                }, 1000);
+            }
+
+            function endGame() {
+                gameActive = false;
+                clearInterval(timerInterval);
+
+                // Disable answer buttons
+                answerButtons.forEach(button => {
+                    button.disabled = true;
+                    button.onclick = null;
+                });
+
+                startButton.disabled = false;
+                startButton.textContent = 'Play Again!';
+                problemElement.textContent = `Time's Up! Final Score: ${score}`;
+                problemElement.style.color = '#3498db';
+            }
+
+            // --- Initial Setup ---
+            answerButtons.forEach(button => button.textContent = ''); // Clear initial button text
+        </script>
+        <br><a href="portfolio.html" class="nav-btn">BACK</a>
+    </body>
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content ">
+            <div class="footer-section ">
+                <h3>FUTURE</h3>
+                <p>Digital visionary pushing the boundaries of design and technology. Creating immersive experiences that bridge imagination and reality.</p>
+                <div class="social-links ">
+                    <a href="# " class="social-link ">🐦</a>
+                    <a href="# " class="social-link ">💼</a>
+                    <a href="# " class="social-link ">📸</a>
+                    <a href="# " class="social-link ">🎨</a>
+                </div>
+            </div>
+
+            <div class="footer-section ">
+                <h3>QUICK LINKS</h3>
+                <div class="footer-links ">
+                    <a href="index.html ">Home</a>
+                    <a href="gallery.html ">Gallery</a>
+                    <a href="portfolio.html ">Portfolio</a>
+                    <a href="about.html ">About</a>
+                    <a href="contact.html ">Contact</a>
+                </div>
+            </div>
+
+            <div class="footer-section ">
+                <h3>SERVICES</h3>
+                <div class="footer-links ">
+                    <a href="# ">UI/UX Design</a>
+                    <a href="# ">Web Development</a>
+                    <a href="# ">Brand Identity</a>
+                    <a href="# ">Digital Strategy</a>
+                    <a href="# ">Consultation</a>
+                </div>
+            </div>
+
+            <div class="footer-section ">
+                <h3>GET IN TOUCH</h3>
+                <div class="footer-links ">
+                    <a href="mailto:geverlyneucacion0@gmail.com ">geverlyneucacion0@gmail.com</a>
+                    <a href="tel:+639268159941 ">+639268159941</a>
+                    <p style="margin-top: 1rem; color: rgba(255, 255, 255, 0.7); ">Metaverse<br>Digital Realm</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="footer-bottom ">
+            <p>&copy; 2024 Geverlyn Eucacion. All rights reserved.</p>
+            <div class="footer-bottom-links ">
+                <a href="# ">Privacy Policy</a>
+                <a href="# ">Terms of Service</a>
+                <a href="# ">Cookie Policy</a>
+            </div>
+        </div>
+    </footer>
+
+</html>
